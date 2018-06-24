@@ -4,7 +4,8 @@ class SequenceElements{
 		//Driver_FindSequenceOfConsectiveEqualNumbers();
 		//Driver_FindSequenceOfConsectiveIncreasingNumbers();
 		//Driver_FindKNumbersWithMaxSum();
-		Driver_FindSubSequenceOfNumbersWithMaxSum();
+		//Driver_FindSubSequenceOfNumbersWithMaxSum();
+		Driver_FindSubSequenceOfNumbersWithExactSum();
 		System.Console.ReadLine();
 	}
 	//----------------------------------------------------------------------------------------------------------------------------------------
@@ -182,4 +183,48 @@ class SequenceElements{
             }
             return ary2;
         }
+			//--------------------------------------
+	//Write a program to find a sequence of neighbor numbers in an array, which has a sum of certain number S. Example: {4, 3, 1, 4, 2, 5, 8}, S=11  {4, 2, 5}.
+	//--------------------------------------
+	static void Driver_FindSubSequenceOfNumbersWithExactSum(){
+		System.Console.WriteLine("Please Enter Size of Array - greater than 0");
+		Int32 size = Int32.Parse(System.Console.ReadLine());
+		if(size<=0)
+			System.Console.WriteLine("Please Enter size greater than 0");
+		Int32[] ary =  new Int32[size];
+		for(Int32 i=0; i< size; i++){
+			ary[i] = Int32.Parse(System.Console.ReadLine());
+		}
+		System.Console.WriteLine("Please Enter Total:");
+		Int32 total = Int32.Parse(System.Console.ReadLine());
+		Int32[] ary2 = FindSubSequenceOfNumbersWithExactSum(ary,total);	
+			for(Int32 i=0; i< ary2.Length; i++){
+			System.Console.Write(ary2[i] + " , ");
+		}
+	}
+		static Int32[] FindSubSequenceOfNumbersWithExactSum(Int32[] ary,Int32 total){
+			Int32 sum=0,startIndex=0,endIndex=0;
+			Boolean found = false;
+			for(Int32 i=0; i<ary.Length; i++){
+				sum=ary[i];
+				for(Int32 j=i+1; j<ary.Length; j++){
+					if(sum + ary[j] == total){
+						found = true;
+						startIndex = i;
+						endIndex = j;
+					}
+					sum = sum + ary[j];
+					if(sum + ary[j] > total) break;
+				}
+			}
+			Int32 count = 0;
+			if(found==true){
+				count = endIndex - startIndex + 1;
+			}			
+			Int32[] ary2 = new Int32[count];
+			for (Int32 i=0;i<count;i++){
+				ary2[i] = ary[startIndex + i];
+			}
+			return ary2;
+		}
 }
